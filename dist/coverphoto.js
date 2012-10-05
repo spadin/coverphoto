@@ -102,15 +102,15 @@ return __p;
       };
 
       CoverPhoto.prototype.bindEvents = function() {
-        $(this.$el).on("mouseleave", this.hideActions);
-        $(this.$el).on("mouseenter", this.showActions);
-        $(this.$el).on("mouseleave", this.actionsContainer.selector, this.hideActionsMenu);
-        $(this.$el).on("change", this.fileInput.selector, this.handleFileSelected);
-        $(this.$el).on("click", this.openMenuButton.selector, this.showActionsMenu);
-        $(this.$el).on("click", this.uploadButton.selector, this.startUpload);
-        $(this.$el).on("click", this.repositionButton.selector, this.startReposition);
-        $(this.$el).on("click", this.saveEditButton.selector, this.saveEdit);
-        return $(this.$el).on("click", this.cancelEditButton.selector, this.cancelEdit);
+        $(this.$el).bind("mouseleave", this.hideActions);
+        $(this.$el).bind("mouseenter", this.showActions);
+        $(this.$el).delegate(this.actionsContainer.selector, "mouseleave", this.hideActionsMenu);
+        $(this.$el).delegate(this.fileInput.selector, "change", this.handleFileSelected);
+        $(this.$el).delegate(this.openMenuButton.selector, "click", this.showActionsMenu);
+        $(this.$el).delegate(this.uploadButton.selector, "click", this.startUpload);
+        $(this.$el).delegate(this.repositionButton.selector, "click", this.startReposition);
+        $(this.$el).delegate(this.saveEditButton.selector, "click", this.saveEdit);
+        return $(this.$el).delegate(this.cancelEditButton.selector, "click", this.cancelEdit);
       };
 
       CoverPhoto.prototype.setup = function() {

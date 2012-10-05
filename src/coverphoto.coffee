@@ -22,15 +22,16 @@ do ($) ->
       $("canvas", @$el).attr "height", @$el.height()
 
     bindEvents: ->
-      $(@$el).on "mouseleave", @hideActions
-      $(@$el).on "mouseenter", @showActions
-      $(@$el).on "mouseleave", @actionsContainer.selector, @hideActionsMenu
-      $(@$el).on "change",     @fileInput.selector,        @handleFileSelected
-      $(@$el).on "click",      @openMenuButton.selector,   @showActionsMenu
-      $(@$el).on "click",      @uploadButton.selector,     @startUpload
-      $(@$el).on "click",      @repositionButton.selector, @startReposition
-      $(@$el).on "click",      @saveEditButton.selector,   @saveEdit
-      $(@$el).on "click",      @cancelEditButton.selector, @cancelEdit
+      $(@$el).bind "mouseleave", @hideActions
+      $(@$el).bind "mouseenter", @showActions
+      
+      $(@$el).delegate @actionsContainer.selector, "mouseleave", @hideActionsMenu
+      $(@$el).delegate @fileInput.selector,        "change",     @handleFileSelected
+      $(@$el).delegate @openMenuButton.selector,   "click",      @showActionsMenu
+      $(@$el).delegate @uploadButton.selector,     "click",      @startUpload
+      $(@$el).delegate @repositionButton.selector, "click",      @startReposition
+      $(@$el).delegate @saveEditButton.selector,   "click",      @saveEdit
+      $(@$el).delegate @cancelEditButton.selector, "click",      @cancelEdit
       
 
     setup: ->
