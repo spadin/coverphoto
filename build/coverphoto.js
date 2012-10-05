@@ -1,3 +1,14 @@
+this["coverphotoTemplates"] = this["coverphotoTemplates"] || {};
+
+this["coverphotoTemplates"]["src/templates/form.jst"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<form action="'+
+( postUrl )+
+'">\n  <input type="file" name="coverphoto[image]" accepts="image/*">\n</form>';
+}
+return __p;
+};
 (function() {
 
   (function($) {
