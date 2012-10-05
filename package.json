@@ -8,6 +8,8 @@
     "test": "grunt qunit"
   },
   "devDependencies": {
-    "grunt": "~0.3.16"
+    "grunt": "~0.3.16",
+    "grunt-coffee": ">0",
+    "grunt-coffeelint": ">0"
   }
 }
