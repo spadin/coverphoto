@@ -63,12 +63,16 @@ module.exports = function(grunt) {
       app: {
         files: ['src/**/*.coffee']
       }
+    },
+    eco_amd: {
+      files: 'src/templats/**/*.eco'
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint qunit concat min');
+  grunt.registerTask('default', 'eco_amd lint qunit concat min');
   grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-coffeelint');
+  grunt.loadNpmTasks('grunt-eco-amd');
 
 };
