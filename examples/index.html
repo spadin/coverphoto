@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Cover Photo Example</title>
+  <script src="../libs/jquery/jquery.js"></script>
+  <script src="../build/coverphoto.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $(".coverphoto").CoverPhoto({
+        postUrl: '/my_update_cover_photo'
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="coverphoto"></div>
+</body>
+</html>

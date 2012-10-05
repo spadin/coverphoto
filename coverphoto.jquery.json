@@ -1,0 +1,29 @@
+{
+  "name": "coverphoto",
+  "title": "Cover Photo",
+  "description": "Create Facebook-like cover photos.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/sandropadin/coverphoto",
+  "author": {
+    "name": "Sandro Padin",
+    "email": "sandropadin@gmail.com",
+    "url": "http://sa.ndropad.in"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sandropadin/coverphoto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sandropadin/coverphoto/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sandropadin/coverphoto/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
