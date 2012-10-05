@@ -34,8 +34,8 @@ module.exports = function(grunt) {
       files: ['grunt.js', 'test/**/*.js']
     },
     watch: {
-      files: ['<config:lint.files>','<config:coffeelint.app.files>'],
-      tasks: 'coffee jst concat:app clean:app lint coffeelint qunit'
+      files: ['<config:lint.files>','<config:coffeelint.app.files>','src/templates/**/*.jst','src/stylesheets/coverphoto.less'],
+      tasks: 'coffee jst concat:app clean:app less lint coffeelint qunit'
     },
     jshint: {
       options: {
@@ -82,11 +82,25 @@ module.exports = function(grunt) {
       app: {
         src: ["build/tmp"]
       }
+    },
+    less: {
+      app: {
+        files: {
+          'build/coverphoto.css': ['src/stylesheets/coverphoto.less']
+        }
+      }
+    },
+    copy: {
+      dist: {
+        files: {
+          "dist/coverphoto.css": "build/coverphoto.css"
+        }
+      }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'coffee jst concat:app clean:app lint qunit concat:dist min');
+  grunt.registerTask('default', 'coffee jst concat:app clean:app less lint qunit concat:dist min copy');
   grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-coffeelint');
 };
