@@ -24,7 +24,7 @@ do ($) ->
     bindEvents: ->
       $(@$el).bind "mouseleave", @hideActions
       $(@$el).bind "mouseenter", @showActions
-      
+
       $(@$el).delegate @actionsContainer.selector, "mouseleave", @hideActionsMenu
       $(@$el).delegate @fileInput.selector,        "change",     @handleFileSelected
       $(@$el).delegate @openMenuButton.selector,   "click",      @showActionsMenu
@@ -96,8 +96,6 @@ do ($) ->
       false
 
     saveEdit: =>
-      console.log "Saving to #{@options.postUrl}"
-
       @gatherImageData()
       @form.submit()
       @hideEditMenu()
