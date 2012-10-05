@@ -15,6 +15,10 @@ module.exports = function(grunt) {
       dist: {
         src: ['<banner:meta.banner>', '<file_strip_banner:build/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
+      },
+      app: {
+        src: ['build/tmp/coverphoto-templates.js', 'build/tmp/coverphoto-plugin.js'],
+        dest: 'build/coverphoto.js'
       }
     },
     min: {
@@ -31,7 +35,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<config:lint.files>','<config:coffeelint.app.files>'],
-      tasks: 'coffee lint coffeelint qunit'
+      tasks: 'coffee jst concat:app clean:app lint coffeelint qunit'
     },
     jshint: {
       options: {
@@ -55,7 +59,7 @@ module.exports = function(grunt) {
     coffee: {
       compile: {
         files: {
-          'build/coverphoto.js': ['<config:coffeelint.app.files>']
+          'build/tmp/coverphoto-plugin.js': ['<config:coffeelint.app.files>']
         }
       }
     },
@@ -64,15 +68,25 @@ module.exports = function(grunt) {
         files: ['src/**/*.coffee']
       }
     },
-    eco_amd: {
-      files: 'src/templats/**/*.eco'
+    jst: {
+      app: {
+        options: {
+          namespace: 'coverphotoTemplates'
+        },
+        files: {
+          'build/tmp/coverphoto-templates.js': ['src/templates/**/*.jst']
+        }
+      }
+    },
+    clean: {
+      app: {
+        src: ["build/tmp"]
+      }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'eco_amd lint qunit concat min');
+  grunt.registerTask('default', 'coffee jst concat:app clean:app lint qunit concat:dist min');
   grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-coffeelint');
-  grunt.loadNpmTasks('grunt-eco-amd');
-
 };
