@@ -1,0 +1,79 @@
+.coverphoto-container {
+  position: relative;
+  font: 12px "Helvetica";
+  width: 100%; height: 100%;
+  canvas {
+    position: absolute;
+    display: none;
+    z-index: 101;
+  }
+  .coverphoto-photo-container {
+    position: absolute
+    width: 100%; height: 100%;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .coverphoto-form {
+    display: none;
+  }
+  .actions {
+    position: absolute;
+    width: 200px;
+    top: 165px; right: 10px;
+    z-index: 4;
+
+    .chooser {
+      list-style: none;
+      margin: 0; padding: 0;
+      z-index: 5;
+      ul, li {
+        margin: 0; padding: 0;
+      }
+      a {
+        display: block;
+        width: 180px; height: 100%;
+        text-decoration: none;
+        padding: 5px 10px;
+        color: #fff;
+      }
+      .item {
+        display: block;
+        background-color: #4261b8;
+        &:hover {
+          background-color: lighten(#4261b8, 10%);
+        }
+      }
+      .menu {
+        display: none;
+      }
+    }
+    .edit {
+      display: none;
+      list-style: none;
+      margin: 0; padding: 0;
+      z-index: 6;
+      ul, li {
+        margin: 0; padding: 0;
+      }
+      .item {
+        background-color: #4261b8;
+        width: 80px;
+        float: left;
+        a {
+          display: block;
+          width: 70px; height: 100%;
+          text-decoration: none;
+          padding: 5px 10px;
+          color: #fff;
+        }
+        &:hover {
+          background-color: lighten(#4261b8, 10%);
+        }
+      }
+      .save {
+        margin-left: 20px;
+        width: 100px;
+      }
+    }
+  }
+}
