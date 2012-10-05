@@ -1,0 +1,3 @@
+<form action="<%= @postUrl %>" method="post" enctype="multipart/form-data">
+  <input type="file" accepts="image/*" name="coverphoto[file]">
+</form>

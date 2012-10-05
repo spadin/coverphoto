@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
+        src: ['<banner:meta.banner>', '<file_strip_banner:build/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -53,9 +53,10 @@ module.exports = function(grunt) {
     },
     uglify: {},
     coffee: {
-      app: {
-        src: ['src/**/*.coffee'],
-        dest: 'build'
+      compile: {
+        files: {
+          'build/coverphoto.js': ['<config:coffeelint.app.files>']
+        }
       }
     },
     coffeelint: {
@@ -67,7 +68,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'lint qunit concat min');
-  grunt.loadNpmTasks('grunt-coffee');
+  grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-coffeelint');
 
 };

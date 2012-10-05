@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "grunt": "~0.3.16",
-    "grunt-coffee": ">0",
+    "grunt-contrib": ">0",
     "grunt-coffeelint": ">0"
   }
 }
