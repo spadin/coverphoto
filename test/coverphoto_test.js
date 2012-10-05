@@ -36,15 +36,15 @@
 
   test('will post photo to default url', 1, function() {
     this.div.CoverPhoto();
-    var coverPhoto = this.div.CoverPhoto("get");
-    strictEqual(coverPhoto.options.postUrl, '/update_cover_photo', 'postUrl is properly set');
+    var action = $("form", this.div).attr("action");
+    strictEqual(action, '/update_cover_photo', 'postUrl is properly set');
   });
 
   test('should add edit button', 1, function() {
     this.div.CoverPhoto({
       editable: true
     });
-    strictEqual($('.edit', this.div).text(), 'Change cover photo', 'edit link is added');
+    strictEqual($('.edit', this.div).length, 1, 'edit link is added');
   });
 
 
