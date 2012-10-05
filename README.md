@@ -5,8 +5,8 @@ Create Facebook-like cover photos.
 ## Getting Started
 Download the [production version][min] or the [development version][max].
 
-[min]: https://raw.github.com/sandropadin/coverphoto/master/dist/coverphoto.min.js
-[max]: https://raw.github.com/sandropadin/coverphoto/master/dist/coverphoto.js
+[min]: https://raw.github.com/spadin/coverphoto/master/dist/coverphoto.min.js
+[max]: https://raw.github.com/spadin/coverphoto/master/dist/coverphoto.js
 
 In your web page:
 
