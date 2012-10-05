@@ -97,6 +97,7 @@ return __p;
         if (this.options.currentImage) {
           this.addImage(this.options.currentImage);
         }
+        $(".actions", this.$el).css("top", this.$el.height() - 35);
         $("canvas", this.$el).attr("width", this.$el.width());
         return $("canvas", this.$el).attr("height", this.$el.height());
       };
@@ -193,7 +194,6 @@ return __p;
       };
 
       CoverPhoto.prototype.saveEdit = function() {
-        console.log("Saving to " + this.options.postUrl);
         this.gatherImageData();
         this.form.submit();
         this.hideEditMenu();
