@@ -18,6 +18,7 @@ do ($) ->
       @addActions() if @options.editable
       @addImage(@options.currentImage) if @options.currentImage
 
+      $(".actions", @$el).css("top", @$el.height() - 35)
       $("canvas", @$el).attr "width",  @$el.width()
       $("canvas", @$el).attr "height", @$el.height()
 
