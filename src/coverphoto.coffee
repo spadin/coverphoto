@@ -1,12 +1,13 @@
 do ($) ->
   class CoverPhoto
     @defaults:
-      postUrl:  '/update_cover_photo'
+      postUrl:  null
       editable: false
 
     constructor: ({@el, @options}) ->
+      @options = $.extend(CoverPhoto.defaults, @options)
       @templates = CoverPhotoTemplates
-      @setup()
+      @setEl()
       @render()
       @elements()
       @bindEvents()
@@ -40,8 +41,7 @@ do ($) ->
       @on "click",      @saveEditButton.selector,   @saveEdit
       @on "click",      @cancelEditButton.selector, @cancelEdit
 
-    setup: ->
-      @options = $.extend(CoverPhoto.defaults, @options)
+    setEl: ->
       html = @templates["src/templates/container.jst"]()
       @$el =  $(html).appendTo $(@el)
 
