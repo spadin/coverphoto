@@ -1,8 +1,10 @@
 do ($) ->
   class CoverPhoto
     @defaults:
-      postUrl:  null
       editable: false
+      post:
+        url: null
+        field: 'coverphoto[cropped]'
 
     constructor: ({@el, @options}) ->
       @options = $.extend(CoverPhoto.defaults, @options)
@@ -106,7 +108,7 @@ do ($) ->
       @fileInput = $("input[name='coverphoto[original]']", @$el)
 
     handleCoverPhotoUpdated: (evt, dataUrl) =>
-      @form.submit() if @options.postUrl
+      @form.submit() if @options.post.url?
 
     saveEdit: =>
       dataUrl = @gatherImageData()

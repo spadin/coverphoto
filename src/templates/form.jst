@@ -1,4 +1,4 @@
-<form action="<%= postUrl %>" class="coverphoto-form" method="post" enctype="multipart/form-data">
+<form action="<%= post.url %>" class="coverphoto-form" method="post" enctype="multipart/form-data">
   <input type="file" name="coverphoto[original]" accept="image/*">
-  <input type="hidden" name="coverphoto[cropped]">
+  <input type="hidden" name="<%= post.field %>">
 </form>
