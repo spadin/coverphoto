@@ -53,7 +53,7 @@
 .coverphoto-container .actions .chooser .item:hover {
   background-color: #657fc8;
 }
-.coverphoto-container .actions .chooser .menu {
+.coverphoto-container .actions .chooser .sub-menu {
   display: none;
 }
 .coverphoto-container .actions .edit {

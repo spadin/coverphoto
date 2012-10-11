@@ -1,18 +1,18 @@
-/*! Cover Photo - v0.1.0 - 2012-10-05
+/*! Cover Photo - v0.1.0 - 2012-10-10
 * https://github.com/sandropadin/coverphoto
 * Copyright (c) 2012 Sandro Padin; Licensed MIT */
 
-this["coverphotoTemplates"] = this["coverphotoTemplates"] || {};
+this["CoverPhotoTemplates"] = this["CoverPhotoTemplates"] || {};
 
-this["coverphotoTemplates"]["src/templates/actions.jst"] = function(obj){
+this["CoverPhotoTemplates"]["src/templates/actions.jst"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="actions">\n  <ul class="chooser">\n    <li class="open-menu item"><a href="#change_cover_photo">Change cover photo</a></li>\n    <ul class="menu">\n      <li class="upload item"><a href="#upload_cover_photo">Upload new photo</a></li>\n      <!-- <li class="reposition item"><a href="#reposition_cover_photo">Reposition current photo</a></li> -->\n    </ul>\n  </ul>\n  <ul class="edit">\n    <li class="cancel item"><a href="#cancel">Cancel</a></li>\n    <li class="save item"><a href="#save">Save</a></li>\n  </ul>\n</div>';
+__p+='<div class="actions">\n  <ul class="chooser">\n    <li class="open-menu item"><a href="#change_cover_photo">Change cover photo</a></li>\n    <ul class="sub-menu">\n      <li class="upload item"><a href="#upload_cover_photo">Upload new photo</a></li>\n    </ul>\n  </ul>\n  <ul class="edit">\n    <li class="cancel item"><a href="#cancel">Cancel</a></li>\n    <li class="save item"><a href="#save">Save</a></li>\n  </ul>\n</div>';
 }
 return __p;
 };
 
-this["coverphotoTemplates"]["src/templates/container.jst"] = function(obj){
+this["CoverPhotoTemplates"]["src/templates/container.jst"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="coverphoto-container">\n  <canvas class=\'output\'>\n</div>';
@@ -20,39 +20,43 @@ __p+='<div class="coverphoto-container">\n  <canvas class=\'output\'>\n</div>';
 return __p;
 };
 
-this["coverphotoTemplates"]["src/templates/form.jst"] = function(obj){
+this["CoverPhotoTemplates"]["src/templates/form.jst"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<form action="'+
-( postUrl )+
-'" class="coverphoto-form" method="post" enctype="multipart/form-data">\n  <input type="file" name="coverphoto[original]" accept="image/*">\n  <input type="hidden" name="coverphoto[cropped]">\n</form>';
+( post.url )+
+'" class="coverphoto-form" method="post" enctype="multipart/form-data">\n  <input type="file" name="coverphoto[original]" accept="image/*">\n  <input type="hidden" name="'+
+( post.field )+
+'">\n</form>';
 }
 return __p;
 };
 
-this["coverphotoTemplates"]["src/templates/image.jst"] = function(obj){
+this["CoverPhotoTemplates"]["src/templates/image.jst"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="coverphoto-photo-container">\n  <img src="'+
 ( imageData )+
-'" width="1024">\n</div>';
+'" width="'+
+( imageWidth )+
+'">\n</div>';
 }
 return __p;
 };
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __slice = [].slice;
 
   (function($) {
     var CoverPhoto;
     CoverPhoto = (function() {
 
-      CoverPhoto.cache = [];
-
-      CoverPhoto.cacheCount = 0;
-
       CoverPhoto.defaults = {
-        postUrl: '/update_cover_photo',
-        editable: false
+        editable: false,
+        post: {
+          url: null,
+          field: 'coverphoto[cropped]'
+        }
       };
 
       function CoverPhoto(_arg) {
@@ -66,6 +70,8 @@ return __p;
         this.cancelEdit = __bind(this.cancelEdit, this);
 
         this.saveEdit = __bind(this.saveEdit, this);
+
+        this.handleCoverPhotoUpdated = __bind(this.handleCoverPhotoUpdated, this);
 
         this.startUpload = __bind(this.startUpload, this);
 
@@ -81,9 +87,9 @@ return __p;
 
         this.hideActions = __bind(this.hideActions, this);
 
-        this.templates = coverphotoTemplates;
-        this.setup();
-        this.cache();
+        this.options = $.extend(CoverPhoto.defaults, this.options);
+        this.templates = CoverPhotoTemplates;
+        this.setEl();
         this.render();
         this.elements();
         this.bindEvents();
@@ -102,35 +108,41 @@ return __p;
         return $("canvas", this.$el).attr("height", this.$el.height());
       };
 
-      CoverPhoto.prototype.bindEvents = function() {
-        $(this.$el).bind("mouseleave", this.hideActions);
-        $(this.$el).bind("mouseenter", this.showActions);
-        $(this.$el).delegate(this.actionsContainer.selector, "mouseleave", this.hideActionsMenu);
-        $(this.$el).delegate(this.fileInput.selector, "change", this.handleFileSelected);
-        $(this.$el).delegate(this.openMenuButton.selector, "click", this.showActionsMenu);
-        $(this.$el).delegate(this.uploadButton.selector, "click", this.startUpload);
-        $(this.$el).delegate(this.repositionButton.selector, "click", this.startReposition);
-        $(this.$el).delegate(this.saveEditButton.selector, "click", this.saveEdit);
-        return $(this.$el).delegate(this.cancelEditButton.selector, "click", this.cancelEdit);
+      CoverPhoto.prototype.on = function() {
+        var args, evt, handler, selector;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        if (args.length === 3) {
+          evt = args[0], selector = args[1], handler = args[2];
+          return $(this.$el).delegate(selector, evt, handler);
+        } else if (args.length === 2) {
+          evt = args[0], handler = args[1];
+          return $(this.$el).bind(evt, handler);
+        }
       };
 
-      CoverPhoto.prototype.setup = function() {
+      CoverPhoto.prototype.bindEvents = function() {
+        this.on("coverPhotoUpdated", this.handleCoverPhotoUpdated);
+        this.on("mouseleave", this.hideActions);
+        this.on("mouseenter", this.showActions);
+        this.on("mouseleave", this.actionsContainer.selector, this.hideActionsMenu);
+        this.on("change", this.fileInput.selector, this.handleFileSelected);
+        this.on("click", this.openMenuButton.selector, this.showActionsMenu);
+        this.on("click", this.uploadButton.selector, this.startUpload);
+        this.on("click", this.repositionButton.selector, this.startReposition);
+        this.on("click", this.saveEditButton.selector, this.saveEdit);
+        return this.on("click", this.cancelEditButton.selector, this.cancelEdit);
+      };
+
+      CoverPhoto.prototype.setEl = function() {
         var html;
-        this.options = $.extend(CoverPhoto.defaults, this.options);
         html = this.templates["src/templates/container.jst"]();
         return this.$el = $(html).appendTo($(this.el));
-      };
-
-      CoverPhoto.prototype.cache = function() {
-        this.$el.attr('data-coverphoto-id', CoverPhoto.cacheCount);
-        CoverPhoto.cache[CoverPhoto.cacheCount] = this;
-        return CoverPhoto.cacheCount++;
       };
 
       CoverPhoto.prototype.elements = function() {
         this.actionsContainer = $(".actions", this.$el);
         this.actions = $(".chooser", this.$el);
-        this.actionsMenu = $(".chooser .menu", this.$el);
+        this.actionsMenu = $(".chooser .sub-menu", this.$el);
         this.editMenu = $(".edit", this.$el);
         this.cancelEditButton = $(".edit .cancel a", this.$el);
         this.saveEditButton = $(".edit .save a", this.$el);
@@ -152,10 +164,13 @@ return __p;
       };
 
       CoverPhoto.prototype.addImage = function(imageData) {
+        var imageWidth;
+        imageWidth = this.$el.width();
         this.originalImage = $(".coverphoto-photo-container img", this.$el).attr("src");
         $(".coverphoto-photo-container", this.$el).remove();
         return this.$el.append(this.templates["src/templates/image.jst"]({
-          imageData: imageData
+          imageData: imageData,
+          imageWidth: imageWidth
         }));
       };
 
@@ -193,11 +208,27 @@ return __p;
         return false;
       };
 
+      CoverPhoto.prototype.resetFileInputField = function() {
+        var form;
+        form = this.fileInput.parent();
+        this.fileInput.remove();
+        $('<input type="file" name="coverphoto[original]" accept="image/*">').appendTo(form);
+        return this.fileInput = $("input[name='coverphoto[original]']", this.$el);
+      };
+
+      CoverPhoto.prototype.handleCoverPhotoUpdated = function(evt, dataUrl) {
+        if (this.options.post.url != null) {
+          return this.form.submit();
+        }
+      };
+
       CoverPhoto.prototype.saveEdit = function() {
-        this.gatherImageData();
-        this.form.submit();
+        var dataUrl;
+        dataUrl = this.gatherImageData();
+        this.resetFileInputField();
         this.hideEditMenu();
         this.endReposition();
+        this.$el.trigger("coverPhotoUpdated", dataUrl);
         return false;
       };
 
@@ -263,23 +294,20 @@ return __p;
         height = image.height();
         context.drawImage(image[0], 0, image.position().top, width, height);
         dataUrl = this.canvas[0].toDataURL("image/png");
-        return this.hiddenImageInput.val(dataUrl);
+        this.hiddenImageInput.val(dataUrl);
+        return dataUrl;
       };
 
       return CoverPhoto;
 
     })();
     return $.fn.CoverPhoto = function(data) {
-      if (data === 'get' && this.length === 1) {
-        return CoverPhoto.cache[$(this).data('coverphoto-id')];
-      } else {
-        return this.each(function() {
-          return new CoverPhoto({
-            el: this,
-            options: data
-          });
+      return this.each(function() {
+        return new CoverPhoto({
+          el: this,
+          options: data
         });
-      }
+      });
     };
   })($);
 
