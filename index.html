@@ -10,6 +10,33 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="build/coverphoto.css">
+    <style type="text/css">
+      .coverphoto, .output {
+        position: relative;
+        width: 600px;
+        height: 200px;
+        margin: 10px auto;
+        border: 1px solid black;
+      }
+      .coverphoto a {
+        text-shadow: none;
+      }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="build/coverphoto.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $(".coverphoto").CoverPhoto({
+          editable: true
+        });
+        $(".coverphoto").on("coverPhotoUpdated", function(evt, dataUrl) {
+          $(".output").empty();
+          $("<img>").attr("src", dataUrl).appendTo(".output");
+        })
+      });
+    </script>
     <title>jQuery Cover Photo Plugin by spadin</title>
   </head>
 
@@ -32,6 +59,15 @@
 
         <section id="main_content">
           <h3>jQuery Cover Photo Plugin.</h3>
+
+          <div class="example">
+            <div class="coverphoto">
+              
+            </div>
+            <div class="output">
+              
+            </div>
+          </div>
         </section>
 
         <footer>
