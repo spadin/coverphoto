@@ -31,6 +31,7 @@ do ($) ->
         $(@$el).bind evt, handler
 
     bindEvents: ->
+      @on "coverPhotoUpdated", @handleCoverPhotoUpdated
       @on "mouseleave", @hideActions
       @on "mouseenter", @showActions
       @on "mouseleave", @actionsContainer.selector, @hideActionsMenu
@@ -96,11 +97,22 @@ do ($) ->
       @fileInput.click()
       false
 
+    resetFileInputField: ->
+      form = @fileInput.parent()
+      @fileInput.remove()
+      $('<input type="file" name="coverphoto[original]" accept="image/*">')
+        .appendTo form
+      @fileInput = $("input[name='coverphoto[original]']", @$el)
+
+    handleCoverPhotoUpdated: (evt, dataUrl) =>
+      @form.submit() if @options.postUrl
+
     saveEdit: =>
-      @gatherImageData()
-      @form.submit()
+      dataUrl = @gatherImageData()
+      @resetFileInputField()
       @hideEditMenu()
       @endReposition()
+      @$el.trigger("coverPhotoUpdated", dataUrl)
       false
 
     cancelEdit: =>
@@ -148,6 +160,8 @@ do ($) ->
       
       dataUrl = @canvas[0].toDataURL("image/png")
       @hiddenImageInput.val(dataUrl)
+
+      dataUrl
 
   $.fn.CoverPhoto = (data) ->
     @each ->
