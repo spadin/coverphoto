@@ -1,6 +1,5 @@
 do ($) ->
   class CoverPhoto
-    @cache: []; @cacheCount: 0
     @defaults:
       postUrl:  '/update_cover_photo'
       editable: false
@@ -8,7 +7,6 @@ do ($) ->
     constructor: ({@el, @options}) ->
       @templates = coverphotoTemplates
       @setup()
-      @cache()
       @render()
       @elements()
       @bindEvents()
@@ -46,11 +44,6 @@ do ($) ->
       @options = $.extend(CoverPhoto.defaults, @options)
       html = @templates["src/templates/container.jst"]()
       @$el =  $(html).appendTo $(@el)
-
-    cache: ->
-      @$el.attr 'data-coverphoto-id', CoverPhoto.cacheCount
-      CoverPhoto.cache[CoverPhoto.cacheCount] = @
-      CoverPhoto.cacheCount++
 
     elements: ->
       @actionsContainer = $(".actions", @$el)
@@ -157,11 +150,7 @@ do ($) ->
       @hiddenImageInput.val(dataUrl)
 
   $.fn.CoverPhoto = (data) ->
-    if data is 'get' and @.length is 1
-      CoverPhoto.cache[$(@).data('coverphoto-id')]
-
-    else
-      @each ->
-        new CoverPhoto
-          el: @
-          options: data
+    @each ->
+      new CoverPhoto
+        el: @
+        options: data
