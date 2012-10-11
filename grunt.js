@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     jst: {
       app: {
         options: {
-          namespace: 'coverphotoTemplates'
+          namespace: 'CoverPhotoTemplates'
         },
         files: {
           'build/tmp/coverphoto-templates.js': ['src/templates/**/*.jst']

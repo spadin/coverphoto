@@ -5,7 +5,7 @@ do ($) ->
       editable: false
 
     constructor: ({@el, @options}) ->
-      @templates = coverphotoTemplates
+      @templates = CoverPhotoTemplates
       @setup()
       @render()
       @elements()
