@@ -48,7 +48,7 @@ do ($) ->
     elements: ->
       @actionsContainer = $(".actions", @$el)
       @actions          = $(".chooser", @$el)
-      @actionsMenu      = $(".chooser .menu", @$el)
+      @actionsMenu      = $(".chooser .sub-menu", @$el)
       @editMenu         = $(".edit", @$el)
       @cancelEditButton = $(".edit .cancel a", @$el)
       @saveEditButton   = $(".edit .save a", @$el)
