@@ -22,18 +22,25 @@ do ($) ->
       $("canvas", @$el).attr "width",  @$el.width()
       $("canvas", @$el).attr "height", @$el.height()
 
-    bindEvents: ->
-      $(@$el).bind "mouseleave", @hideActions
-      $(@$el).bind "mouseenter", @showActions
+    on: (args...)->
+      if args.length is 3
+        [selector, evt, handler] = args
+        $(@$el).delegate selector, evt, handler
 
-      $(@$el).delegate @actionsContainer.selector, "mouseleave", @hideActionsMenu
-      $(@$el).delegate @fileInput.selector,        "change",     @handleFileSelected
-      $(@$el).delegate @openMenuButton.selector,   "click",      @showActionsMenu
-      $(@$el).delegate @uploadButton.selector,     "click",      @startUpload
-      $(@$el).delegate @repositionButton.selector, "click",      @startReposition
-      $(@$el).delegate @saveEditButton.selector,   "click",      @saveEdit
-      $(@$el).delegate @cancelEditButton.selector, "click",      @cancelEdit
-      
+      else if args.length is 2
+        [evt, handler] = args
+        $(@$el).bind evt, handler
+
+    bindEvents: ->
+      @on "mouseleave", @hideActions
+      @on "mouseenter", @showActions
+      @on "mouseleave", @actionsContainer.selector, @hideActionsMenu
+      @on "change",     @fileInput.selector,        @handleFileSelected
+      @on "click",      @openMenuButton.selector,   @showActionsMenu
+      @on "click",      @uploadButton.selector,     @startUpload
+      @on "click",      @repositionButton.selector, @startReposition
+      @on "click",      @saveEditButton.selector,   @saveEdit
+      @on "click",      @cancelEditButton.selector, @cancelEdit
 
     setup: ->
       @options = $.extend(CoverPhoto.defaults, @options)
