@@ -14,15 +14,15 @@ do ($) ->
     render: ->
       @addForm()
       @addActions() if @options.editable
-      @addImage(@options.currentImage) if @options.currentImage
+      @addImage @options.currentImage if @options.currentImage
 
-      $(".actions", @$el).css("top", @$el.height() - 35)
+      $(".actions", @$el).css "top", @$el.height() - 35
       $("canvas", @$el).attr "width",  @$el.width()
       $("canvas", @$el).attr "height", @$el.height()
 
     on: (args...)->
       if args.length is 3
-        [selector, evt, handler] = args
+        [evt, selector, handler] = args
         $(@$el).delegate selector, evt, handler
 
       else if args.length is 2
