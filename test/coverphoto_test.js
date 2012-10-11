@@ -35,7 +35,9 @@
   });
 
   test('will post photo to default url', 1, function() {
-    this.div.CoverPhoto();
+    this.div.CoverPhoto({
+      postUrl: '/update_cover_photo'
+    });
     var action = $("form", this.div).attr("action");
     strictEqual(action, '/update_cover_photo', 'postUrl is properly set');
   });
