@@ -30,7 +30,9 @@ In your web page:
 <script type="text/javascript">
   $(function() {
     $(".coverphoto").CoverPhoto({
-      postUrl: '/process_cover_photo.php',
+      post: {
+        url: '/process_cover_photo.php'
+      },
       currentImage: 'images/funny.jpg',
       editable: true
     });
@@ -49,7 +51,6 @@ coverphoto[original] - File input field.
 coverphoto[cropped]  - Base64 encoded image dataUrl
 
 ## Examples
-_(Coming soon)_
 
-## Release History
-_(Nothing yet)_
+Look in the `examples` directory.
+
