@@ -68,9 +68,10 @@ do ($) ->
       @$el.append @templates["src/templates/actions.jst"] @options
 
     addImage: (imageData) ->
+      imageWidth = @$el.width()
       @originalImage = $(".coverphoto-photo-container img", @$el).attr("src")
       $(".coverphoto-photo-container", @$el).remove()
-      @$el.append @templates["src/templates/image.jst"]({imageData})
+      @$el.append @templates["src/templates/image.jst"]({imageData, imageWidth})
 
     hideActions: =>
       @actions.fadeOut()
