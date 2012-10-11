@@ -9,25 +9,31 @@
   <script src="../build/coverphoto.js"></script>
 
   <style type="text/css">
-    .coverphoto {
+    .coverphoto, .output {
       width: 1024px;
       height: 200px;
       border: 1px solid black;
-      margin: 0 auto;
+      margin: 10px auto;
     }
   </style>
 
   <script type="text/javascript">
     $(function() {
       $(".coverphoto").CoverPhoto({
-        postUrl: '/my_update_cover_photo',
         currentImage: 'images/funny.jpg',
         editable: true
+      });
+      $(".coverphoto").bind('coverPhotoUpdated', function(evt, dataUrl) {
+        $(".output").empty();
+        $("<img>").attr("src", dataUrl).appendTo(".output");
       });
     });
   </script>
 </head>
 <body>
   <div class="coverphoto"></div>
+  <div class="output">
+    <h1>The output of your cover photo will appear here.</h1>
+  </div>
 </body>
 </html>
