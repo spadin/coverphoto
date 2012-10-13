@@ -127,7 +127,9 @@ do ($) ->
     startReposition: (evt = null) =>
       image = $(".coverphoto-photo-container img", @$el)
       makeImageDraggable = () =>
-        yMax = -(image.height() - image.parent().height() - 10)
+        pPos = image.parents(".coverphoto-container").position()
+        yMax = -(image.height() - image.parent().height() - pPos.top)
+        
         image.draggable
           axis: "y"
           containment: [0,yMax,0,0]
