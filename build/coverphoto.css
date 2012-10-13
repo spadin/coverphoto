@@ -1,0 +1,90 @@
+.coverphoto-container {
+  position: relative;
+  font: 12px "Helvetica";
+  width: 100%;
+  height: 100%;
+}
+.coverphoto-container canvas {
+  position: absolute;
+  display: none;
+  z-index: 101;
+}
+.coverphoto-container .coverphoto-photo-container {
+  position: absolute
+    width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+.coverphoto-container .coverphoto-form {
+  display: none;
+}
+.coverphoto-container .actions {
+  position: absolute;
+  width: 200px;
+  top: 165px;
+  right: 10px;
+  z-index: 4;
+}
+.coverphoto-container .actions .chooser {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 5;
+}
+.coverphoto-container .actions .chooser ul,
+.coverphoto-container .actions .chooser li {
+  margin: 0;
+  padding: 0;
+}
+.coverphoto-container .actions .chooser a {
+  display: block;
+  width: 180px;
+  height: 100%;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #fff;
+}
+.coverphoto-container .actions .chooser .item {
+  display: block;
+  background-color: #4261b8;
+}
+.coverphoto-container .actions .chooser .item:hover {
+  background-color: #657fc8;
+}
+.coverphoto-container .actions .chooser .sub-menu {
+  display: none;
+}
+.coverphoto-container .actions .edit {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 6;
+}
+.coverphoto-container .actions .edit ul,
+.coverphoto-container .actions .edit li {
+  margin: 0;
+  padding: 0;
+}
+.coverphoto-container .actions .edit .item {
+  background-color: #4261b8;
+  width: 80px;
+  float: left;
+}
+.coverphoto-container .actions .edit .item a {
+  display: block;
+  width: 70px;
+  height: 100%;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #fff;
+}
+.coverphoto-container .actions .edit .item:hover {
+  background-color: #657fc8;
+}
+.coverphoto-container .actions .edit .save {
+  margin-left: 20px;
+  width: 100px;
+}
