@@ -1,4 +1,4 @@
-/*! Cover Photo - v0.1.0 - 2012-10-10
+/*! Cover Photo - v0.1.0 - 2012-10-12
 * https://github.com/sandropadin/coverphoto
 * Copyright (c) 2012 Sandro Padin; Licensed MIT */
 
@@ -249,8 +249,9 @@ return __p;
         }
         image = $(".coverphoto-photo-container img", this.$el);
         makeImageDraggable = function() {
-          var yMax;
-          yMax = -(image.height() - image.parent().height() - 10);
+          var pPos, yMax;
+          pPos = image.parents(".coverphoto-container").position();
+          yMax = -(image.height() - image.parent().height() - pPos.top);
           return image.draggable({
             axis: "y",
             containment: [0, yMax, 0, 0]
