@@ -1,4 +1,4 @@
-/*! Cover Photo - v0.1.0 - 2012-10-12
+/*! Cover Photo - v0.1.0 - 2012-10-18
 * https://github.com/sandropadin/coverphoto
 * Copyright (c) 2012 Sandro Padin; Licensed MIT */
 
