@@ -1,4 +1,4 @@
-/*! Cover Photo - v0.1.0 - 2012-10-18
+/*! Cover Photo - v0.1.0 - 2012-10-19
 * https://github.com/sandropadin/coverphoto
 * Copyright (c) 2012 Sandro Padin; Licensed MIT */
 
@@ -87,7 +87,7 @@ return __p;
 
         this.hideActions = __bind(this.hideActions, this);
 
-        this.options = $.extend(CoverPhoto.defaults, this.options);
+        this.options = $.extend(true, CoverPhoto.defaults, this.options);
         this.templates = CoverPhotoTemplates;
         this.setEl();
         this.render();
