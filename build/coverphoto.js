@@ -83,7 +83,7 @@ return __p;
 
         this.hideActions = __bind(this.hideActions, this);
 
-        this.options = $.extend(CoverPhoto.defaults, this.options);
+        this.options = $.extend(true, CoverPhoto.defaults, this.options);
         this.templates = CoverPhotoTemplates;
         this.setEl();
         this.render();

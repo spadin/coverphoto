@@ -7,7 +7,7 @@ do ($) ->
         field: 'coverphoto[cropped]'
 
     constructor: ({@el, @options}) ->
-      @options = $.extend(CoverPhoto.defaults, @options)
+      @options = $.extend(true, CoverPhoto.defaults, @options)
       @templates = CoverPhotoTemplates
       @setEl()
       @render()
