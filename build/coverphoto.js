@@ -11,7 +11,7 @@ return __p;
 this["CoverPhotoTemplates"]["src/templates/container.jst"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="coverphoto-container">\n  <canvas class=\'output\'>\n</div>';
+__p+='<div class="coverphoto-container">\n  <canvas class=\'output\'></canvas>\n</div>';
 }
 return __p;
 };
@@ -148,7 +148,10 @@ return __p;
         this.form = $("form", this.$el);
         this.fileInput = $("input[name='coverphoto[original]']", this.$el);
         this.hiddenImageInput = $("input[name='coverphoto[cropped]']", this.$el);
-        return this.canvas = $("canvas", this.$el);
+        this.canvas = $("canvas", this.$el)[0];
+        if (typeof G_vmlCanvasManager !== "undefined" && G_vmlCanvasManager !== null) {
+          return this.canvas = G_vmlCanvasManager.initElement(this.canvas);
+        }
       };
 
       CoverPhoto.prototype.addForm = function() {
@@ -286,11 +289,11 @@ return __p;
       CoverPhoto.prototype.gatherImageData = function() {
         var context, dataUrl, height, image, width;
         image = $(".coverphoto-photo-container img", this.$el);
-        context = this.canvas[0].getContext("2d");
+        context = this.canvas.getContext("2d");
         width = image.width();
         height = image.height();
         context.drawImage(image[0], 0, image.position().top, width, height);
-        dataUrl = this.canvas[0].toDataURL("image/png");
+        dataUrl = this.canvas.toDataURL("image/png");
         this.hiddenImageInput.val(dataUrl);
         return dataUrl;
       };

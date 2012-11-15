@@ -61,7 +61,10 @@ do ($) ->
       @form             = $("form", @$el)
       @fileInput        = $("input[name='coverphoto[original]']", @$el)
       @hiddenImageInput = $("input[name='coverphoto[cropped]']", @$el)
-      @canvas           = $("canvas", @$el)
+      @canvas           = $("canvas", @$el)[0]
+
+      if G_vmlCanvasManager?
+        @canvas = G_vmlCanvasManager.initElement(@canvas)
 
     addForm: ->
       @$el.append @templates["src/templates/form.jst"] @options
@@ -157,13 +160,13 @@ do ($) ->
 
     gatherImageData: ->
       image   = $(".coverphoto-photo-container img", @$el)
-      context = @canvas[0].getContext("2d")
+      context = @canvas.getContext("2d")
       width   = image.width()
       height  = image.height()
 
       context.drawImage(image[0], 0, image.position().top, width, height)
       
-      dataUrl = @canvas[0].toDataURL("image/png")
+      dataUrl = @canvas.toDataURL("image/png")
       @hiddenImageInput.val(dataUrl)
 
       dataUrl
